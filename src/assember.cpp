@@ -31,7 +31,7 @@ std::string assember::binTohex(std::string &bin)
 {
     std::bitset<32> bits(bin);
     std::stringstream res;
-    res << std::hex << std::uppercase << std::setfill('0') << std::setw(8) << bits.to_ullong();
+    res << std::hex << std::setfill('0') << std::setw(8) << bits.to_ullong();
     return res.str();
 }
 
@@ -91,7 +91,7 @@ void assember::Run()
         lineCount += 1;
         std::transform(line.begin(), line.end(), line.begin(), ::tolower);
         unsigned int opPos = line.find(' ');
-        unsigned int aPos, bPos;
+        unsigned int aPos, bPos, cPos;
         std::string op = line.substr(0, opPos);
         std::string rs, rt, rd, imm, sa;
         std::string binCode;
@@ -395,7 +395,6 @@ void assember::Run()
         }
         case LB_Hash: // #31
         {
-            int cPos;
             aPos = line.find(',', opPos + 1);
             bPos = line.find('(', aPos + 1);
             cPos = line.find(')', bPos + 1);
@@ -408,7 +407,6 @@ void assember::Run()
         }
         case LW_Hash: // #32
         {
-            int cPos;
             aPos = line.find(',', opPos + 1);
             bPos = line.find('(', aPos + 1);
             cPos = line.find(')', bPos + 1);
@@ -421,7 +419,6 @@ void assember::Run()
         }
         case SB_Hash: // #33
         {
-            int cPos;
             aPos = line.find(',', opPos + 1);
             bPos = line.find('(', aPos + 1);
             cPos = line.find(')', bPos + 1);
@@ -434,7 +431,6 @@ void assember::Run()
         }
         case SW_Hash: // #34
         {
-            int cPos;
             aPos = line.find(',', opPos + 1);
             bPos = line.find('(', aPos + 1);
             cPos = line.find(')', bPos + 1);
@@ -457,4 +453,8 @@ void assember::Run()
         binCode.clear();
         hexCode.clear();
     }
+    source.close();
+    target.close();
+
+    std::cout << "bin code has been written to " << this->targetFilePath << std::endl;
 }
